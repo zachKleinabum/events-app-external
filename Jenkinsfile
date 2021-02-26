@@ -7,8 +7,8 @@
 //      cluster-1 
 //      us-central1-c
 //      the following values can be found in the yaml:
-//      demo-api
-//      demo-api (in the template/spec section of the deployment)
+//      demo-ui
+//      demo-ui (in the template/spec section of the deployment)
 
 pipeline {
     agent any 
@@ -34,7 +34,7 @@ pipeline {
         }        
          stage('Stage 3') {
             environment {
-                PORT = 8080
+                PORT = 8081
             }
             steps {
                 echo 'install dependencies' 
@@ -57,7 +57,7 @@ pipeline {
                 sh 'gcloud container clusters get-credentials cluster-1 --zone us-central1-c --project roidtc-feb126'
                 echo 'Update the image'
                 echo "gcr.io/roidtc-feb126/external-image:2.${env.BUILD_ID}"
-                sh "kubectl set image deployment/demo-api demo-api=gcr.io/roidtc-feb126/external-image:v2.${env.BUILD_ID} --record"
+                sh "kubectl set image deployment/demo-ui demo-ui=gcr.io/roidtc-feb126/external-image:v2.${env.BUILD_ID} --record"
             }
         }        
                
